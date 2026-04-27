@@ -1,0 +1,23 @@
+# Data files (download separately)
+data/raw/
+data/processed/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+venv/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Results (optional — uncomment to exclude generated outputs)
+# results/figures/
+# results/metrics.csv
