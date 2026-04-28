@@ -2,7 +2,7 @@
 
 **Course:** CSIT 557 — Advanced Techniques in Data Science  
 **Semester:** Spring 2026  
-**Author:** [Your Name]
+**Author:** Md Allama Ikbal Sijan
 
 ---
 
