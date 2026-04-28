@@ -2,13 +2,13 @@
 
 **Course:** CSIT 557 — Advanced Techniques in Data Science  
 **Semester:** Spring 2026  
-**Author:** Md Allama Ikbal Sijan
+**Author:** Md Allama Ikbal Sijan  
 
 ---
 
 ## Project Overview
 
-This project builds a movie recommendation system from scratch using the CiaoDVD dataset. It implements and compares multiple recommendation algorithms including collaborative filtering and SVD matrix factorization.
+This project builds a movie recommendation system from scratch using the CiaoDVD dataset. It implements and compares four recommendation algorithms: a global average baseline, user-based collaborative filtering, item-based collaborative filtering, and SVD matrix factorization. The project follows a vibe coding approach, using AI-assisted development throughout.
 
 ---
 
@@ -16,14 +16,24 @@ This project builds a movie recommendation system from scratch using the CiaoDVD
 
 **CiaoDVD** — crawled from dvd.ciao.co.uk in December 2013.
 
-| File | Description | Size |
-|------|-------------|------|
-| `movie-ratings.txt` | userId, movieId, categoryId, reviewId, rating (1–5), date | 72,665 ratings |
-| `trusts.txt` | trustorId, trusteeId, trustRating | 40,133 trust links |
+| File | Description |
+|------|-------------|
+| `ratings.txt` | userId, movieId, rating (1–5) |
+| `trust.txt` | trustorId, trusteeId, trustRating |
 
-Download: https://guoguibing.github.io/librec/datasets.html
-
+Download: https://guoguibing.github.io/librec/datasets.html  
 Place downloaded files in `data/raw/`.
+
+**Key statistics after cleaning:**
+
+| Metric | Value |
+|--------|-------|
+| Total users | 1,508 |
+| Total movies | 2,071 |
+| Total ratings | 35,497 |
+| Matrix sparsity | 98.86% |
+| Median ratings per user | 15 |
+| Median ratings per movie | 2 |
 
 ---
 
@@ -50,7 +60,9 @@ recommendation-system/
 │   └── evaluation.py
 ├── results/
 │   ├── figures/
-│   └── metrics.csv
+│   ├── metrics_cf.csv
+│   ├── metrics_all.csv
+│   └── metrics_topk.csv
 └── report/
     └── final_report.pdf
 ```
@@ -61,7 +73,7 @@ recommendation-system/
 
 ```bash
 # Clone the repository
-git clone https://github.com/[your-username]/recommendation-system.git
+git clone https://github.com/Sijan14/recommendation-system.git
 cd recommendation-system
 
 # Install dependencies
@@ -72,14 +84,16 @@ pip install -r requirements.txt
 
 ## How to Run
 
+Run the notebooks in order:
+
 ```bash
-# Step 1: EDA
+# Step 1: Data loading and EDA
 jupyter notebook notebooks/01_eda.ipynb
 
-# Step 2: Collaborative Filtering models
+# Step 2: Collaborative filtering models
 jupyter notebook notebooks/02_cf_model.ipynb
 
-# Step 3: SVD model
+# Step 3: SVD matrix factorization
 jupyter notebook notebooks/03_svd_model.ipynb
 
 # Step 4: Evaluation and comparison
@@ -92,23 +106,33 @@ jupyter notebook notebooks/04_evaluation.ipynb
 
 | Model | Type | Description |
 |-------|------|-------------|
-| Global Average | Baseline | Predicts the mean rating for all pairs |
-| User-Based CF | Collaborative Filtering | Recommends based on similar users |
-| Item-Based CF | Collaborative Filtering | Recommends based on similar items |
-| SVD | Matrix Factorization | Learns latent user/item factors |
+| Global Average | Baseline | Predicts the global mean rating for all pairs |
+| User-Based CF | Collaborative Filtering | Recommends based on similar users (cosine similarity) |
+| Item-Based CF | Collaborative Filtering | Recommends based on similar items (cosine similarity) |
+| SVD | Matrix Factorization | Learns latent user and item factors via truncated SVD |
 
 ---
 
 ## Results
 
-*To be updated after evaluation.*
+### RMSE and MAE
 
 | Model | RMSE | MAE |
 |-------|------|-----|
-| Global Average | — | — |
-| User-Based CF | — | — |
-| Item-Based CF | — | — |
-| SVD | — | — |
+| Global Average | 0.8122 | 0.6603 |
+| User-Based CF | 0.8260 | 0.6605 |
+| Item-Based CF | 0.7292 | 0.5726 |
+| SVD (k=10) | **0.7235** | **0.5654** |
+
+### Precision@10 and Recall@10 (relevance threshold: rating >= 4.0)
+
+| Model | Precision@10 | Recall@10 |
+|-------|-------------|----------|
+| Global Average | 0.2366 | 0.6362 |
+| Item-Based CF | **0.2502** | **0.6957** |
+| SVD (k=10) | 0.2488 | 0.6863 |
+
+SVD achieves the best rating prediction accuracy (RMSE/MAE). Item-Based CF achieves the best ranking quality (Precision@10 and Recall@10).
 
 ---
 
