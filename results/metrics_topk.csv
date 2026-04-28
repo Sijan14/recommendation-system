@@ -1,0 +1,4 @@
+Model,Precision@10,Recall@10
+Global Average,0.2366,0.6362
+Item-Based CF,0.2502,0.6957
+SVD (k=10),0.2488,0.6863
