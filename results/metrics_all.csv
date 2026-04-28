@@ -1,0 +1,5 @@
+Model,RMSE,MAE
+Global Average,0.8122,0.6603
+User-Based CF,0.826,0.6605
+Item-Based CF,0.7292,0.5726
+SVD (k=10),0.7235,0.5654
